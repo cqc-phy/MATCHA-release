@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MATCHA | Usage</title>
+  <meta name="description" content="MATCHA (MATChing HEFT Amplitudes) is a Mathematica package for symbolic matching between UV theories and HEFT." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="logo-panel" href="description.html" aria-label="MATCHA home"><img src="images/logomatcha.png" alt="MATCHA logo" /></a>
+    <div class="project-subtitle">Matching HEFT Amplitudes</div>
+    <div class="nav-group">
+      <a class="nav-link" href="description.html"><span>◧</span>Description</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-heading">Getting started</div>
+      <a class="nav-link" href="requirements.html"><span>□</span>Requirements and Installation</a>
+      <a class="nav-link active" href="usage.html"><span>&lt;/&gt;</span>Usage</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-heading">Documentation</div>
+      <a class="nav-link" href="command_reference.html"><span>{}</span>Command Reference</a>
+      <a class="nav-link" href="troubleshooting.html"><span>?</span>Troubleshooting</a>
+    </div>
+    <div class="nav-group"><div class="nav-heading">About</div>
+      <a class="nav-link" href="citation.html"><span>”</span>Citation</a>
+      <a class="nav-link" href="changelog.html"><span>⟳</span>Changelog</a>
+      <a class="nav-link" href="contact.html"><span>✉</span>Contact</a>
+      <a class="nav-link" href="license.html"><span>⚖</span>License</a>
+    </div>
+    <div class="sidebar-footer">MATCHA <span class="version-badge">v1.0</span><br />Version 1.0 · June 2026</div>
+  </aside>
+  <div class="main-wrap">
+    <div class="topbar">
+  <a href="https://github.com/cqc-phy/MATCHA-release">GitHub</a>
+  <a href="requirements.html">Getting started</a>
+  <a href="usage.html">Usage</a>
+  <a href="command_reference.html">Documentation</a>
+  <a href="citation.html">About</a>
+</div>
+    <main class="content">
+      <div class="breadcrumb"><a href="description.html">MATCHA</a> / Usage</div>
+      <section class="doc-card">
+  <h1>Usage</h1>
+  <p>A Mathematica notebook with this workflow is available in the GitHub repository.</p>
+
+  <h2>1) Open Mathematica and move to the MATCHA installation directory</h2>
+  <p>Open a Mathematica notebook and set the working directory to the folder where MATCHA was cloned:</p>
+  <div class="copy-card">
+    <div class="copy-card-head">
+      <span>Mathematica</span>
+      <button class="copy-button" type="button" data-copy-target="usage-set-directory">Copy</button>
+    </div>
+    <pre class="copy-code"><code id="usage-set-directory">SetDirectory["/path/to/MATCHA-release"]</code></pre>
+  </div>
+
+  <h2>2) Load MATCHA</h2>
+  <p>Load MATCHA and then load the external tools before defining the model fields and parameters:</p>
+  <div class="copy-card">
+    <div class="copy-card-head">
+      <span>Mathematica</span>
+      <button class="copy-button" type="button" data-copy-target="usage-load-tools">Copy</button>
+    </div>
+    <pre class="copy-code"><code id="usage-load-tools">&lt;&lt; MATCHA`
+LoadTools[]</code></pre>
+  </div>
+
+  <p>Once the tools have been loaded, the next step is to define the Standard Model fields, the heavy BSM fields, and the Standard Model parameters according to the conventions used in the user’s FeynArts model files.</p>
+  <p>To illustrate this setup, we consider below the Real Singlet Extension (RSE) example used in the manuscript.</p>
+
+  <h2>Example: Real Singlet Extension (RSE)</h2>
+  <p>In the corresponding <code>.mod</code> file, the Standard Model Higgs is represented by <code>S[15]</code>, the charged W boson by <code>V[2]</code>, the charged Goldstone boson by <code>S[5]</code>, the neutral Goldstone boson by <code>S[3]</code>, and the quark field used in the Yukawa matching, which in this example is the top quark, by <code>F[1]</code>. In MATCHA, these are passed as field specifications such as <code>{"S", 15}</code>, <code>{"V", 2}</code>, and <code>{"F", 1}</code>.</p>
+  <p>The model used in the manuscript is <code>Singlet_for_MATCHA</code>. The <code>.mod</code> model file and the corresponding <code>.gen</code> file should be available through the configured <code>ModelPath</code>.</p>
+
+  <h2>3) Define the Standard Model fields</h2>
+  <p>Use <code>SetSMFields</code> to specify the FeynArts labels associated with the Standard Model fields entering the matching calculation:</p>
+  <div class="copy-card">
+    <div class="copy-card-head">
+      <span>Mathematica</span>
+      <button class="copy-button" type="button" data-copy-target="usage-sm-fields">Copy</button>
+    </div>
+    <pre class="copy-code"><code id="usage-sm-fields">SetSMFields[&lt;|
+  "Higgs" -&gt; {"S", 15},
+  "GaugeCharged" -&gt; {"V", 2},
+  "GoldstoneCharged" -&gt; {"S", 5},
+  "GoldstoneNeutral" -&gt; {"S", 3},
+  "Quark" -&gt; {"F", 1}
+|&gt;]</code></pre>
+  </div>
+
+  <h2>4) Define the heavy BSM fields</h2>
+  <p>Use <code>SetBSMFields</code> to specify the heavy fields that are integrated out. For the Real Singlet Extension, the heavy scalar singlet is represented by <code>S[6]</code>:</p>
+  <div class="copy-card">
+    <div class="copy-card-head">
+      <span>Mathematica</span>
+      <button class="copy-button" type="button" data-copy-target="usage-bsm-fields">Copy</button>
+    </div>
+    <pre class="copy-code"><code id="usage-bsm-fields">SetBSMFields[{{"S", 6}}]</code></pre>
+  </div>
+
+  <h2>5) Define the Standard Model parameters</h2>
+  <p>Use <code>SetSMParams</code> to identify the symbols used in the model file for the Higgs mass, electroweak vacuum expectation value, W-boson mass, and quark mass used in the Yukawa matching:</p>
+  <div class="copy-card">
+    <div class="copy-card-head">
+      <span>Mathematica</span>
+      <button class="copy-button" type="button" data-copy-target="usage-sm-params">Copy</button>
+    </div>
+    <pre class="copy-code"><code id="usage-sm-params">SetSMParams[&lt;|
+  "HiggsMass" -&gt; m,
+  "SMvacuum" -&gt; v,
+  "WMass" -&gt; Mw,
+  "QuarkMass" -&gt; Mt
+|&gt;]</code></pre>
+  </div>
+
+  <h2>6) Run the matching</h2>
+  <p>Finally, call <code>MatchToHEFT</code> with the model name, the desired Higgs order, and the heavy mass parameters. In this example, diagrams are exported and only the diagrams entering the matching are kept:</p>
+  <div class="copy-card">
+    <div class="copy-card-head">
+      <span>Mathematica</span>
+      <button class="copy-button" type="button" data-copy-target="usage-match-to-heft">Copy</button>
+    </div>
+    <pre class="copy-code"><code id="usage-match-to-heft">MatchToHEFT["Singlet_for_MATCHA", 3, {M},
+  ExportDiagrams -&gt; True,
+  OnlyRelevantDiagrams -&gt; True
+]</code></pre>
+  </div>
+</section>
+      <nav class="footer-nav"><a href="requirements.html">← Requirements and Installation</a><a href="command_reference.html">Command Reference →</a></nav>
+      <footer class="site-footer">© MATCHA · Version 1.0 (June 2026)</footer>
+    </main>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('[data-copy-target]').forEach(function(button) {
+    button.addEventListener('click', function() {
+      var target = document.getElementById(button.getAttribute('data-copy-target'));
+      if (!target) return;
+      var text = target.textContent.trim();
+      navigator.clipboard.writeText(text).then(function() {
+        var original = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(function() { button.textContent = original; }, 1600);
+      });
+    });
+  });
+</script>
+</body>
+</html>

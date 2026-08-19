@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MATCHA | Command Reference</title>
+  <meta name="description" content="Reference of the main MATCHA commands, arguments, options, and output inspection tools." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="logo-panel" href="description.html" aria-label="MATCHA home"><img src="images/logomatcha.png" alt="MATCHA logo" /></a>
+    <div class="project-subtitle">Matching HEFT Amplitudes</div>
+    <div class="nav-group">
+      <a class="nav-link" href="description.html"><span>◧</span>Description</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-heading">Getting started</div>
+      <a class="nav-link" href="requirements.html"><span>□</span>Requirements and Installation</a>
+      <a class="nav-link" href="usage.html"><span>&lt;/&gt;</span>Usage</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-heading">Documentation</div>
+      <a class="nav-link active" href="command_reference.html"><span>{}</span>Command Reference</a>
+      <a class="nav-link" href="troubleshooting.html"><span>?</span>Troubleshooting</a>
+    </div>
+    <div class="nav-group"><div class="nav-heading">About</div>
+      <a class="nav-link" href="citation.html"><span>”</span>Citation</a>
+      <a class="nav-link" href="changelog.html"><span>⟳</span>Changelog</a>
+      <a class="nav-link" href="contact.html"><span>✉</span>Contact</a>
+      <a class="nav-link" href="license.html"><span>⚖</span>License</a>
+    </div>
+    <div class="sidebar-footer">MATCHA <span class="version-badge">v1.0</span><br />Version 1.0 · June 2026</div>
+  </aside>
+  <div class="main-wrap">
+    <div class="topbar">
+  <a href="https://github.com/cqc-phy/MATCHA-release">GitHub</a>
+  <a href="requirements.html">Getting started</a>
+  <a href="usage.html">Usage</a>
+  <a href="command_reference.html">Documentation</a>
+  <a href="citation.html">About</a>
+</div>
+    <main class="content">
+      <div class="breadcrumb"><a href="description.html">MATCHA</a> / Command Reference</div>
+      <section class="doc-card">
+  <h1>Command Reference</h1>
+  <p class="lead">This page summarizes the main MATCHA commands used to define the model input, run the matching, and inspect the output.</p>
+
+  <h2>Loading commands</h2>
+  <div class="reference-card">
+    <h3><code>LoadTools[]</code></h3>
+    <p>Loads <code>FeynArts</code> and <code>FormCalc</code> using the routes configured in <code>Config.m</code>.</p>
+    <div class="copy-card compact-copy-card">
+      <div class="copy-card-head">
+        <span>Mathematica</span>
+        <button class="copy-button" type="button" data-copy-target="cmd-load-tools">Copy</button>
+      </div>
+      <pre class="copy-code"><code id="cmd-load-tools">LoadTools[]</code></pre>
+    </div>
+  </div>
+
+  <h2>Model input commands</h2>
+  <div class="reference-card">
+    <h3><code>SetSMFields[assoc]</code></h3>
+    <p>Defines the mapping of the Standard Model fields to the field labels used in the FeynArts model file. The input can be an Association or a list of rules.</p>
+    <table class="doc-table">
+      <thead><tr><th>Allowed key</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>"Higgs"</code></td><td>Standard Model Higgs field.</td></tr>
+        <tr><td><code>"GaugeCharged"</code></td><td>Charged electroweak gauge boson.</td></tr>
+        <tr><td><code>"GaugeNeutral"</code></td><td>Neutral electroweak gauge boson.</td></tr>
+        <tr><td><code>"GoldstoneCharged"</code></td><td>Charged Goldstone boson.</td></tr>
+        <tr><td><code>"GoldstoneNeutral"</code></td><td>Neutral Goldstone boson.</td></tr>
+        <tr><td><code>"Quark"</code></td><td>Quark field used in the Yukawa matching.</td></tr>
+      </tbody>
+    </table>
+    <p>Field specifications follow the FeynArts class labels, for example <code>{"S", n}</code>, <code>{"V", m}</code>, <code>{"F", k}</code>, or <code>{"F", k, {gen}}</code>. The form <code>{"U", n}</code> is not used for <code>SetSMFields</code>.</p>
+    <div class="copy-card compact-copy-card">
+      <div class="copy-card-head">
+        <span>Example</span>
+        <button class="copy-button" type="button" data-copy-target="cmd-set-sm-fields">Copy</button>
+      </div>
+      <pre class="copy-code"><code id="cmd-set-sm-fields">SetSMFields[&lt;|
+  "Higgs" -&gt; {"S", 15},
+  "GaugeCharged" -&gt; {"V", 2},
+  "GoldstoneCharged" -&gt; {"S", 5},
+  "GoldstoneNeutral" -&gt; {"S", 3},
+  "Quark" -&gt; {"F", 1}
+|&gt;]</code></pre>
+    </div>
+  </div>
+
+  <div class="reference-card">
+    <h3><code>SetBSMFields[fieldList]</code></h3>
+    <p>Defines the heavy Beyond Standard Model fields that are integrated out. The input is a list of fields using FeynArts-style specifications.</p>
+    <table class="doc-table">
+      <thead><tr><th>Entry form</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>{"S", n}</code></td><td>Scalar field with FeynArts index <code>n</code>.</td></tr>
+        <tr><td><code>{"V", m}</code></td><td>Vector field with FeynArts index <code>m</code>.</td></tr>
+        <tr><td><code>{"F", k}</code></td><td>Fermion field with FeynArts index <code>k</code>.</td></tr>
+        <tr><td><code>{"U", r}</code></td><td>Ghost or unphysical field with FeynArts index <code>r</code>.</td></tr>
+        <tr><td><code>{"F", k, {gen}}</code></td><td>Fermion field with an explicit generation index.</td></tr>
+      </tbody>
+    </table>
+    <div class="copy-card compact-copy-card">
+      <div class="copy-card-head">
+        <span>Example</span>
+        <button class="copy-button" type="button" data-copy-target="cmd-set-bsm-fields">Copy</button>
+      </div>
+      <pre class="copy-code"><code id="cmd-set-bsm-fields">SetBSMFields[{{"S", 6}}]</code></pre>
+    </div>
+    <p>In this example, <code>{"S", 6}</code> identifies a heavy BSM scalar.</p>
+  </div>
+
+  <div class="reference-card">
+    <h3><code>SetSMParams[assoc]</code></h3>
+    <p>Optional command used to align the notation of the Standard Model parameters with the notation used in the UV model file. This can help simplify the final expressions.</p>
+    <table class="doc-table">
+      <thead><tr><th>Key</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>"HiggsMass"</code></td><td>Symbol used for the Higgs mass.</td></tr>
+        <tr><td><code>"SMvacuum"</code></td><td>Symbol used for the electroweak vacuum expectation value.</td></tr>
+        <tr><td><code>"WMass"</code></td><td>Symbol used for the W-boson mass.</td></tr>
+        <tr><td><code>"QuarkMass"</code></td><td>Symbol used for the quark mass entering the Yukawa matching.</td></tr>
+      </tbody>
+    </table>
+    <p>For Yukawa matching, <code>"QuarkMass"</code> should be set to the mass of the selected quark. Otherwise, the generic <code>Mq</code> may appear in the result.</p>
+    <div class="copy-card compact-copy-card">
+      <div class="copy-card-head">
+        <span>Example</span>
+        <button class="copy-button" type="button" data-copy-target="cmd-set-sm-params">Copy</button>
+      </div>
+      <pre class="copy-code"><code id="cmd-set-sm-params">SetSMParams[&lt;|
+  "HiggsMass" -&gt; m,
+  "SMvacuum" -&gt; v,
+  "WMass" -&gt; Mw,
+  "QuarkMass" -&gt; Mt
+|&gt;]</code></pre>
+    </div>
+  </div>
+
+  <h2>Matching command</h2>
+  <div class="reference-card">
+    <h3><code>MatchToHEFT[modelModName, modelGenName, higgsOrderMax, massList]</code></h3>
+    <p>Runs the matching of the UV model onto HEFT. The argument <code>modelModName</code> specifies the <code>.mod</code> file and <code>modelGenName</code> specifies the corresponding <code>.gen</code> file. If both files have the same name, the short form <code>MatchToHEFT[modelModName, higgsOrderMax, massList]</code> can be used.</p>
+    <table class="doc-table">
+      <thead><tr><th>Argument</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>modelModName</code></td><td>Name of the FeynArts <code>.mod</code> model to be matched.</td></tr>
+        <tr><td><code>modelGenName</code></td><td>Name of the corresponding FeynArts <code>.gen</code> file.</td></tr>
+        <tr><td><code>higgsOrderMax</code></td><td>Maximum Higgs order included in the calculation.</td></tr>
+        <tr><td><code>massList</code></td><td>List of heavy masses associated with the fields defined through <code>SetBSMFields</code>.</td></tr>
+      </tbody>
+    </table>
+    <h3>Options</h3>
+    <table class="doc-table">
+      <thead><tr><th>Option</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>EFTorder -&gt; 2</code></td><td>EFT order used in the matching. Currently this is the implemented value.</td></tr>
+        <tr><td><code>SimplifyResult -&gt; True</code></td><td>Simplifies the matching output.</td></tr>
+        <tr><td><code>ExportDiagrams -&gt; False</code></td><td>Controls whether the corresponding Feynman diagrams are exported.</td></tr>
+        <tr><td><code>OutputDirectory -&gt; Automatic</code></td><td>Controls the directory where diagram and coefficient files are written.</td></tr>
+        <tr><td><code>AlternativeBasis -&gt; True</code></td><td>If <code>True</code>, MATCHA also exports the coefficient solutions before the final field redefinition, including the <code>p</code>-coefficients.</td></tr>
+        <tr><td><code>OnlyRelevantDiagrams -&gt; False</code></td><td>If <code>True</code>, only relevant diagrams are generated and exported; <code>AllDiagrams</code> and <code>IgnoredDiagrams</code> are skipped.</td></tr>
+      </tbody>
+    </table>
+    <div class="copy-card compact-copy-card">
+      <div class="copy-card-head">
+        <span>Example</span>
+        <button class="copy-button" type="button" data-copy-target="cmd-match-to-heft">Copy</button>
+      </div>
+      <pre class="copy-code"><code id="cmd-match-to-heft">MatchToHEFT["Singlet_for_MATCHA", 3, {M},
+  ExportDiagrams -&gt; True,
+  OnlyRelevantDiagrams -&gt; True
+]</code></pre>
+    </div>
+  </div>
+
+  <h2>Output and diagram inspection</h2>
+  <p>After executing <code>MatchToHEFT</code>, the following commands are available.</p>
+  <div class="reference-card">
+    <h3><code>Results["coupling"]</code></h3>
+    <p>Returns the final matching expression for the HEFT coupling specified by <code>"coupling"</code> in the canonical HEFT basis.</p>
+    <div class="copy-card compact-copy-card">
+      <div class="copy-card-head">
+        <span>Example</span>
+        <button class="copy-button" type="button" data-copy-target="cmd-results">Copy</button>
+      </div>
+      <pre class="copy-code"><code id="cmd-results">Results["a2"]</code></pre>
+    </div>
+  </div>
+
+  <div class="reference-card">
+    <h3><code>MATCHADiagrams["coupling"]</code></h3>
+    <p>Returns the diagram information associated with the HEFT coupling specified by <code>"coupling"</code>. The entries below can be used to access the corresponding diagram categories.</p>
+    <table class="doc-table">
+      <thead><tr><th>Category</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>"RelevantDiagrams"</code></td><td>Diagrams entering the matching, including contact diagrams and diagrams containing the heavy fields to be integrated out.</td></tr>
+        <tr><td><code>"IgnoredDiagrams"</code></td><td>Diagrams containing only light propagating fields.</td></tr>
+        <tr><td><code>"AllDiagrams"</code></td><td>Complete set of generated diagrams.</td></tr>
+      </tbody>
+    </table>
+    <div class="copy-card compact-copy-card">
+      <div class="copy-card-head">
+        <span>Example</span>
+        <button class="copy-button" type="button" data-copy-target="cmd-diagrams">Copy</button>
+      </div>
+      <pre class="copy-code"><code id="cmd-diagrams">Paint[MATCHADiagrams["a1"]["RelevantDiagrams"]]</code></pre>
+    </div>
+  </div>
+</section>
+      <nav class="footer-nav"><a href="usage.html">← Usage</a><a href="troubleshooting.html">Troubleshooting →</a></nav>
+      <footer class="site-footer">© MATCHA · Version 1.0 (June 2026)</footer>
+    </main>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('[data-copy-target]').forEach(function(button) {
+    button.addEventListener('click', function() {
+      var target = document.getElementById(button.getAttribute('data-copy-target'));
+      if (!target) return;
+      var text = target.textContent.trim();
+      navigator.clipboard.writeText(text).then(function() {
+        var original = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(function() { button.textContent = original; }, 1600);
+      });
+    });
+  });
+</script>
+</body>
+</html>

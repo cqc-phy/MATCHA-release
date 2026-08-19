@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MATCHA | Description</title>
+  <meta name="description" content="MATCHA (MATChing HEFT Amplitudes) is a Mathematica package for symbolic matching between UV theories and HEFT." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="logo-panel" href="description.html" aria-label="MATCHA home"><img src="images/logomatcha.png" alt="MATCHA logo" /></a>
+    <div class="project-subtitle">Matching HEFT Amplitudes</div>
+    <div class="nav-group">
+      <a class="nav-link active" href="description.html"><span>◧</span>Description</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-heading">Getting started</div>
+      <a class="nav-link" href="requirements.html"><span>□</span>Requirements and Installation</a>
+      <a class="nav-link" href="usage.html"><span>&lt;/&gt;</span>Usage</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-heading">Documentation</div>
+      <a class="nav-link" href="command_reference.html"><span>{}</span>Command Reference</a>
+      <a class="nav-link" href="troubleshooting.html"><span>?</span>Troubleshooting</a>
+    </div>
+    <div class="nav-group"><div class="nav-heading">About</div>
+      <a class="nav-link" href="citation.html"><span>”</span>Citation</a>
+      <a class="nav-link" href="changelog.html"><span>⟳</span>Changelog</a>
+      <a class="nav-link" href="contact.html"><span>✉</span>Contact</a>
+      <a class="nav-link" href="license.html"><span>⚖</span>License</a>
+    </div>
+    <div class="sidebar-footer">MATCHA <span class="version-badge">v1.0</span><br />Version 1.0 · June 2026</div>
+  </aside>
+  <div class="main-wrap">
+    <div class="topbar">
+  <a href="https://github.com/cqc-phy/MATCHA-release">GitHub</a>
+  <a href="requirements.html">Getting started</a>
+  <a href="usage.html">Usage</a>
+  <a href="command_reference.html">Documentation</a>
+  <a href="citation.html">About</a>
+</div>
+    <main class="content">
+      <div class="breadcrumb"><a href="description.html">MATCHA</a> / Description</div>
+      <section class="hero">
+  <img class="hero-logo" src="images/logomatcha.png" alt="MATCHA logo" />
+  <div class="badges"><span class="badge">Version 1.0 · June 2026</span></div>
+  <h1>MATChing HEFT Amplitudes</h1>
+  <p class="lead">MATCHA is a Mathematica package designed to perform symbolic matching between ultraviolet (UV) theories and the Higgs Effective Field Theory (HEFT).</p>
+  <div class="actions">
+    <a class="button primary" href="requirements.html">Get started</a>
+    <a class="button" href="usage.html">See example</a>
+    <a class="button" href="https://github.com/cqc-phy/MATCHA-release">GitHub</a>
+  </div>
+  <p class="muted" style="margin-top:18px"><strong>Authors:</strong> Raquel Gómez-Ambrosio and Carlos Quezada Calonge · <a href="mailto:carlosariel.quezadacalonge@unito.it">carlosariel.quezadacalonge@unito.it</a></p>
+</section>
+      <section class="doc-card">
+  <h2>Description</h2>
+  <p>MATCHA automates the workflow required to match UV models onto HEFT at LO using an amplitude-level approach. It generates UV diagrams, computes symbolic UV amplitudes, matches them to the corresponding HEFT structures, and extracts effective coefficients such as <code>a_n</code>, <code>d_n</code> and <code>c_n</code> up to any desired Higgs field order.</p>
+</section>
+      <section class="doc-card">
+  <h2>What MATCHA automates</h2>
+  <ul class="clean-list">
+    <li>Generation of UV diagrams using FeynArts.</li>
+    <li>Symbolic calculation of UV amplitudes using FormCalc.</li>
+    <li>Matching UV amplitudes to the corresponding HEFT structures.</li>
+    <li>Extraction of effective coefficients (<code>a_n</code>, <code>d_n</code>, and <code>c_n</code>) to arbitrary Higgs order.</li>
+  </ul>
+</section>
+      <section class="doc-card">
+  <h2>Workflow</h2>
+  <p class="muted">Conceptual pipeline from a UV model to HEFT coefficients using MATCHA.</p>
+  <div class="flow flow-three" aria-label="MATCHA workflow">
+    <div class="flow-card">
+      <div class="flow-tag">Input</div>
+      <div class="flow-item">
+        <div class="flow-title">UV model</div>
+        <div class="flow-desc">Define field content and parameters.</div>
+      </div>
+    </div>
+    <div class="flow-card flow-card-wide">
+      <div class="flow-tag">Intermediate objects</div>
+      <div class="flow-item">
+        <div class="flow-title">FeynArts diagrams</div>
+        <div class="flow-desc">Generate UV topologies and amplitudes.</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-title">FormCalc amplitudes</div>
+        <div class="flow-desc">Compute symbolic UV amplitudes and simplify expressions.</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-title">HEFT matching equations</div>
+        <div class="flow-desc">Map UV amplitudes onto HEFT structures and solve systems.</div>
+      </div>
+    </div>
+    <div class="flow-card">
+      <div class="flow-tag">Output</div>
+      <div class="flow-item">
+        <div class="flow-title">HEFT coefficients</div>
+        <div class="flow-desc">Extract effective coefficients to any Higgs order.</div>
+      </div>
+    </div>
+  </div>
+</section>
+      <nav class="footer-nav"><span></span><a href="requirements.html">Requirements and Installation →</a></nav>
+      <footer class="site-footer">© MATCHA · Version 1.0 (June 2026)</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

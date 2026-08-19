@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MATCHA | Requirements and Installation</title>
+  <meta name="description" content="MATCHA (MATChing HEFT Amplitudes) is a Mathematica package for symbolic matching between UV theories and HEFT." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="logo-panel" href="description.html" aria-label="MATCHA home"><img src="images/logomatcha.png" alt="MATCHA logo" /></a>
+    <div class="project-subtitle">Matching HEFT Amplitudes</div>
+    <div class="nav-group">
+      <a class="nav-link" href="description.html"><span>◧</span>Description</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-heading">Getting started</div>
+      <a class="nav-link active" href="requirements.html"><span>□</span>Requirements and Installation</a>
+      <a class="nav-link" href="usage.html"><span>&lt;/&gt;</span>Usage</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-heading">Documentation</div>
+      <a class="nav-link" href="command_reference.html"><span>{}</span>Command Reference</a>
+      <a class="nav-link" href="troubleshooting.html"><span>?</span>Troubleshooting</a>
+    </div>
+    <div class="nav-group"><div class="nav-heading">About</div>
+      <a class="nav-link" href="citation.html"><span>”</span>Citation</a>
+      <a class="nav-link" href="changelog.html"><span>⟳</span>Changelog</a>
+      <a class="nav-link" href="contact.html"><span>✉</span>Contact</a>
+      <a class="nav-link" href="license.html"><span>⚖</span>License</a>
+    </div>
+    <div class="sidebar-footer">MATCHA <span class="version-badge">v1.0</span><br />Version 1.0 · June 2026</div>
+  </aside>
+  <div class="main-wrap">
+    <div class="topbar">
+  <a href="https://github.com/cqc-phy/MATCHA-release">GitHub</a>
+  <a href="requirements.html">Getting started</a>
+  <a href="usage.html">Usage</a>
+  <a href="command_reference.html">Documentation</a>
+  <a href="citation.html">About</a>
+</div>
+    <main class="content">
+      <div class="breadcrumb"><a href="description.html">MATCHA</a> / Requirements and Installation</div>
+      <section class="doc-card">
+        <h1>Requirements and Installation</h1>
+      </section>
+      <section class="doc-card">
+  <h2>Requirements</h2>
+  <p>In the accompanying paper, MATCHA was tested with the following versions:</p>
+  <ul class="clean-list">
+    <li>Mathematica: version 12.0</li>
+    <li>FeynArts: version 3.11</li>
+    <li>FormCalc: version 9.8</li>
+  </ul>
+  <p>
+    FeynRules is not required to run MATCHA directly. However, the user must provide the FeynRules output of the UV model: the <code>.mod</code> and <code>.gen</code> model files used as input by FeynArts.
+  </p>
+  <p>
+    Although MATCHA loads the full UV model and its definitions, when generating the FeynRules output it is recommended to use
+  </p>
+  <div class="code-title">FeynRules</div>
+<pre><code>CouplingRename -&gt; False</code></pre>
+  <p class="requirements-note">
+    This keeps the dependence on the heavy masses explicit in the generated model files.
+  </p>
+  <p class="requirements-note">
+    Finally, the UV parameters should also be chosen such that no divergences are produced in the large-mass limit.
+  </p>
+</section>
+      <section class="doc-card">
+  <h2>Installation</h2>
+  <p>The simplest way to install MATCHA is to clone the <a href="https://github.com/cqc-phy/MATCHA-release">public GitHub repository</a> in a directory of your choosing:</p>
+  <div class="copy-card">
+    <div class="copy-card-head">
+      <span>Clone repository</span>
+      <button class="copy-button" type="button" data-copy-target="clone-command">Copy</button>
+    </div>
+    <pre class="copy-code"><code id="clone-command">git clone https://github.com/cqc-phy/MATCHA-release</code></pre>
+  </div>
+  <p>After cloning the repository, configure the paths used by MATCHA. In <code>Config.m</code>, locate the corresponding entries and set the routes to FeynArts, FormCalc, the model files, and the directory where MATCHA will store its output:</p>
+  <div class="copy-card">
+    <div class="copy-card-head">
+      <span>Config.m</span>
+    </div>
+    <pre class="copy-code"><code>$MATCHARoutesConfig = &lt;|
+  "FeynArtsRoute" -&gt; "/path/to/FeynArts",
+  "FormCalcRoute" -&gt; "/path/to/FormCalc",
+  "ModelPath" -&gt; "/path/to/Models",
+  "OutputDirectory" -&gt; "/path/to/MATCHA"
+|&gt;;</code></pre>
+  </div>
+  <p>At this point, MATCHA is ready to use.</p>
+</section>
+      <nav class="footer-nav"><a href="description.html">← Description</a><a href="usage.html">Usage →</a></nav>
+      <footer class="site-footer">© MATCHA · Version 1.0 (June 2026)</footer>
+    </main>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('[data-copy-target]').forEach(function(button) {
+    button.addEventListener('click', function() {
+      var target = document.getElementById(button.getAttribute('data-copy-target'));
+      if (!target) return;
+      var text = target.textContent.trim();
+      navigator.clipboard.writeText(text).then(function() {
+        var original = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(function() { button.textContent = original; }, 1600);
+      });
+    });
+  });
+</script>
+</body>
+</html>
