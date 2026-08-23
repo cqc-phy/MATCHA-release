@@ -13,7 +13,7 @@ MATCHADefaultOutputDirectory[] := Quiet @ Check[NotebookDirectory[], Directory[]
 $MATCHARoutesConfig = <|
   "FeynArtsRoute" -> "/home/carlos/PROGS/FeynArts-3.11",
   "FormCalcRoute" -> "/home/carlos/PROGS/FormCalc-9.8",
-  "ModelPath" -> "/home/carlos/OneDrive/MATCHA/package/models",
+  "ModelPath" -> "/home/carlos/MATCHA-release-main/models",
   "OutputDirectory" -> MATCHADefaultOutputDirectory[]
 |>;
 
